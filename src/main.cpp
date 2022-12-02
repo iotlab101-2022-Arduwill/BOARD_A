@@ -21,9 +21,9 @@ IRAM_ATTR void handleRotary()
   if (sum == 0b1110 || sum == 0b0111 || sum == 0b0001 || sum == 0b1000)
     encoderValue--;
   lastEncoded = encoded; // store this value for next time
-  if (encoderValue > 1024)
+  if (encoderValue > 1023)
   {
-    encoderValue = 1024;
+    encoderValue = 1023;
   }
   else if (encoderValue < 0)
   {
