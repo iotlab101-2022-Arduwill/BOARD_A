@@ -59,11 +59,11 @@ void loop()
   if (encoderValue > lux)
   {
     // digitalWrite(RELAY, HIGH);
-    Serial.println("ON");
+    Serial.println("NeoPixel ON");
   }
   else
   {
     // digitalWrite(RELAY, LOW);
-    Serial.println("OFF");
+    Serial.println("NeoPixel OFF");
   }
 }
