@@ -4,7 +4,7 @@
 #include <ConfigPortal8266.h>
 #include <SSD1306.h>
 
-char*               ssid_pfix = (char*)"MQTTSensor_JIHOON";
+char*               ssid_pfix = (char*)"MQTTSensor_jongminkim";
 String              user_config_html = ""
     "<p><input type='text' name='mqttServer' placeholder='mqtt Broker'>";
 
@@ -19,7 +19,7 @@ float               temperature = 0;
 const char*         mqttServer;
 const int           mqttPort = 1883;
 
-unsigned long       pubInterval = 5000;
+unsigned long       pubInterval = 4000;
 unsigned long       lastPublished = - pubInterval;
 
 
@@ -57,8 +57,8 @@ IRAM_ATTR void handleRotary() {
     if(sum == 0b1101 || sum == 0b0100 || sum == 0b0010 || sum == 0b1011) encoderValue ++;
     if(sum == 0b1110 || sum == 0b0111 || sum == 0b0001 || sum == 0b1000) encoderValue --;
     lastEncoded = encoded; //store this value for next time
-    if (encoderValue > 1023) {
-        encoderValue = 1023;
+    if (encoderValue > 60) {
+        encoderValue = 60;
     } else if (encoderValue < 0 ) {
         encoderValue = 0;
     }
@@ -66,6 +66,7 @@ IRAM_ATTR void handleRotary() {
 
 IRAM_ATTR void buttonClicked() {
     Serial.println("pushed");
+    
 }
 
 
@@ -83,12 +84,6 @@ void setup() {
     attachInterrupt(pushSW, buttonClicked, FALLING);
     attachInterrupt(pulseA, handleRotary, CHANGE);
     attachInterrupt(pulseB, handleRotary, CHANGE);
-
-
-
-
-
-
 
 
 
@@ -110,7 +105,7 @@ void setup() {
     while (!client.connected()) {
         Serial.println("Connecting to MQTT...");
  
-        if (client.connect("ESP8266Client")) {
+        if (client.connect("jongmin_ESP8266Client")) {
             Serial.println("connected");  
         } else {
             Serial.print("failed with state "); Serial.println(client.state());
@@ -118,7 +113,7 @@ void setup() {
         }
     }
     dht.setup(14, DHTesp::DHT22); // Connect DHT sensor to GPIO 14
-    client.subscribe("id/jihoon/sensor/cmd");
+    client.subscribe("id/jongminkim/sensor/cmd");
 }
 
 void loop() {
@@ -128,21 +123,20 @@ void loop() {
     if(currentMillis - lastPublished >= pubInterval) {
         lastPublished = currentMillis;
         readDHT22();
-        Serial.printf("%.1f\t %.1f\n", temperature, humidity);
-        char buf[10];
+        char buf[15];
         sprintf(buf, "%.1f", temperature);
-        client.publish("id/jihoon/sensor/evt/temperature", buf);
+        client.publish("id/jongminkim/sensor/evt/temperature", buf);
         sprintf(buf, "%.1f", humidity);
-        client.publish("id/jihoon/sensor/evt/humidity", buf);
-        /*
+        client.publish("id/jongminkim/sensor/evt/humidity", buf);
+        
         int light = analogRead(0);
         sprintf(buf, "%d", light);
-        client.publish("id/jihoon/sensor/evt/light", buf);
-        */
-    }
-
-
+        client.publish("id/jongminkim/sensor/evt/light", buf);
+        sprintf(buf, "%ld", encoderValue);
+        client.publish("id/jongminkim/sensor/evt/encoderValue", buf);
+        Serial.printf("%.1f\t %.1f\t %d\t\n", temperature, humidity, light);
     
+    } 
 }
 
 
@@ -156,36 +150,18 @@ void readDHT22() {
         humidity = dht.getHumidity();              // Read humidity (percent)
         temperature = dht.getTemperature();        // Read temperature as Fahrenheit
 
-       
-
-
-
         display.clear();
     
         String buff1 = String(humidity);
         display.drawString(0, 0, buff1);
-    
-  
+
         String buff2 = String(temperature);
         display.drawString(0, 10, buff2);
-    
-
-    
 
         String buff3 = String(encoderValue);
         display.drawString(0, 20, buff3);
 
-
-       
-
-
-        display.display();
-
-
-
-
-
-        
+        display.display();     
     }
 }
 
@@ -195,7 +171,19 @@ void readDHT22() {
 void callback(char* topic, byte* payload, unsigned int length) {
  
     char msgBuffer[20];
-    if(!strcmp(topic, "id/jihoon/relay/cmd")) {
+    if(!strcmp(topic, "id/jongminkim/relay/cmd")) {
+        int i;
+        for(i = 0; i < (int)length; i++) {
+            msgBuffer[i] = payload[i];
+        } 
+        msgBuffer[i] = '\0';
+        Serial.printf("\n%s -> %s", topic, msgBuffer);
+        if(!strcmp(msgBuffer, "status")) {
+            lastPublished -= pubInterval;
+        }
+    }
+
+    else if(!strcmp(topic, "id/jongminkim/light/cmd")) {
         int i;
         for(i = 0; i < (int)length; i++) {
             msgBuffer[i] = payload[i];
