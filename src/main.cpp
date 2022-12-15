@@ -134,7 +134,7 @@ void loop() {
         client.publish("id/jongminkim/sensor/evt/light", buf);
         sprintf(buf, "%ld", encoderValue);
         client.publish("id/jongminkim/sensor/evt/encoderValue", buf);
-        Serial.printf("%.1f\t %.1f\t %d\t\n", temperature, humidity, light);
+        Serial.printf("%.1f\t %.1f\t %d\t %d\n", temperature, humidity, light, encoderValue);
     
     } 
 }
