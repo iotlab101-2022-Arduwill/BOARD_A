@@ -11,3 +11,8 @@ https://user-images.githubusercontent.com/90883981/207995391-fe0a3a9b-0ff3-49b0-
 
 https://user-images.githubusercontent.com/90883981/207995404-698a8782-c2e9-4cfe-a828-50fed4f958b0.mp4
 
+
+# Automatic Video
+
+https://user-images.githubusercontent.com/90883981/208024459-1a6abc1f-6947-4e8f-bb5e-536ba085ee8e.mp4
+
