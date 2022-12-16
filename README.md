@@ -1,4 +1,10 @@
 # Smart_Home_BOARD_A
+---------------------------------
+# Project Architecture & Sensor
+![image](https://user-images.githubusercontent.com/90883981/208057649-3383498c-fa61-497f-87fb-234b0833b9db.png)
+
+
+# Project PPT
 [4조_최종_IoT 프로젝트.pptx](https://github.com/iotlab101-2022-Arduwill/Smart_Home_BOARD_A/files/10241705/4._._IoT.pptx)
 
 # User Control Video
