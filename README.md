@@ -33,3 +33,10 @@ https://user-images.githubusercontent.com/90883981/208024836-f419372f-0ab2-471e-
 
 ![SmartHome_DashBoard](https://user-images.githubusercontent.com/90883981/208024873-060bbad6-cf81-47c5-979f-dc3d2b542cc3.png)
 ![SmartHome_DashBoard2](https://user-images.githubusercontent.com/90883981/208024877-ad8ee689-3006-4ea6-9785-25f1fd385456.png)
+
+-------------------------
+# Smart_Home_BOARD_B 
+link: https://github.com/iotlab101-2022-Arduwill/Smart_Home_BOARD_B
+
+# Smart_Home_CCTV
+link: https://github.com/iotlab101-2022-Arduwill/Smart_Home_CCTV
